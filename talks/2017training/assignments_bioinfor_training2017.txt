@@ -1,0 +1,29 @@
+#March 28, 2017
+#----------------------------------------------------------------------
+#session Linux
+#----------------------------------------------------------------------
+yeast ORF aa sequence data, 2.4MB
+http://downloads.yeastgenome.org/sequence/S288C_reference/orf_protein/
+
+#file
+orf_trans.fasta.gz 
+
+1) how many proteins in total? #wc, grep
+2) retrieve the aa sequence of YBR137W #grep
+3) protein TFC3 aa composition, barplot #sort, uniq, awk, R
+4) find most frequent aa in each protein, plot the distribution of these AAs #shell script and R function
+
+
+#Recap, Linux basic commands
+file permission, chmod, chown
+man, whoami, who, pwd, cd, ls, mkdir, rmdir, rm -r
+cat, less, head, tail, cp, mv, *, |, wc, grep, diff
+ps, top, kill  
+sort, uniq, cut, paste, tr
+vim, awk?, do looping, shell scripts
+
+
+#----------------------------------------------------------------------
+#session R
+#----------------------------------------------------------------------
+
