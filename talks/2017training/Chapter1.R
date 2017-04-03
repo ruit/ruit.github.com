@@ -9,17 +9,6 @@ R.version
 ### Starting with R
 ###################################################
 
-install.packages('DMwR')
-
-installed.packages()
-
-library()
-
-old.packages()
-
-update.packages()
-
-RSiteSearch('neural networks')
 
 
 ###################################################
@@ -227,7 +216,7 @@ pH[c('area1','dam')]
 
 
 ###################################################
-### Matrices and Arrays
+### Matrices
 ###################################################
 m <- c(45,23,66,77,33,44,56,12,78,23)
 m
@@ -272,16 +261,6 @@ rownames(results) <- c('store1','store2')
 results
 results['store1',]
 results['store2',c('1qrt','4qrt')]
-
-
-a <- array(1:24,dim=c(4,3,2))
-a
-
-
-a[1,3,2]
-a[1,,2]
-a[4,3,]
-a[c(2,3),,-2]
 
 
 m <- matrix(c(45,23,66,77,33,44,56,12,78,23),2,5)

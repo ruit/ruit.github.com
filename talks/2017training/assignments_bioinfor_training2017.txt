@@ -26,4 +26,84 @@ vim, awk?, do looping, shell scripts
 #----------------------------------------------------------------------
 #session R
 #----------------------------------------------------------------------
+#Examples:
+
+# Simple Scatterplot
+attach(mtcars)
+plot(wt, mpg, main="Scatterplot Example", 
+  	xlab="Car Weight ", ylab="Miles Per Gallon ", pch=19)
+# Add fit lines
+abline(lm(mpg~wt), col="red") # regression line (y~x) 
+lines(lowess(wt,mpg), col="blue") # lowess line (x,y)
+
+
+# Simple Bar Plot 
+counts <- table(mtcars$gear)
+barplot(counts, main="Car Distribution", 
+  	xlab="Number of Gears")
+# Stacked Bar Plot with Colors and Legend
+counts <- table(mtcars$vs, mtcars$gear)
+barplot(counts, main="Car Distribution by Gears and VS",
+  xlab="Number of Gears", col=c("darkblue","red"),
+ 	legend = rownames(counts))
+
+# Boxplot of MPG by Car Cylinders 
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+  	xlab="Number of Cylinders", ylab="Miles Per Gallon")
+# Notched Boxplot of Tooth Growth Against 2 Crossed Factors
+# boxes colored for ease of interpretation 
+boxplot(len~supp*dose, data=ToothGrowth, notch=TRUE, 
+  col=(c("gold","darkgreen")),
+  main="Tooth Growth", xlab="Suppliment and Dose")
+
+
+#heatmap
+require(graphics); require(grDevices)
+x  <- as.matrix(mtcars)
+rc <- rainbow(nrow(x), start = 0, end = .3)
+cc <- rainbow(ncol(x), start = 0, end = .3)
+hv <- heatmap(x, col = cm.colors(256), scale = "column",
+              RowSideColors = rc, ColSideColors = cc, margins = c(5,10),
+              xlab = "specification variables", ylab =  "Car Models",
+              main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+utils::str(hv) # the two re-ordering index vectors
+
+## no column dendrogram (nor reordering) at all:
+heatmap(x, Colv = NA, col = cm.colors(256), scale = "column",
+        RowSideColors = rc, margins = c(5,10),
+        xlab = "specification variables", ylab =  "Car Models",
+        main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+
+## "no nothing"
+heatmap(x, Rowv = NA, Colv = NA, scale = "column",
+        main = "heatmap(*, NA, NA) ~= image(t(x))")
+
+
+
+#----------------------------------------------------------------------
+#session NGS
+#----------------------------------------------------------------------
+#Examples
+#blast
+https://blast.ncbi.nlm.nih.gov/Blast.cgi
+>seqX
+AAAGCTTTTCTGTAAAGCTTATAAAAGCTAGGCCCGGACCCTTCTGTGGATAAGTGCCTTTAGCCCTTG
+
+
+
+#bwa lab, yeast genome?
+
+
+
+#liftover, genome assembly conversion
+#like renumbering the buildings on a street
+#bed format, browser extensible format
+#hg19
+#chr	start	end
+chr17	41196311	41277468
+chr13	32889616	32973809
+
+#hg38
+chr17   43044294        43125451
+chr13   32315479        32399672
 
