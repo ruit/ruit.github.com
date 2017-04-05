@@ -103,6 +103,13 @@ heatmap(x, Rowv = NA, Colv = NA, scale = "column",
 
 
 
+#home work & exercises:
+1) read "Analysis.txt", the algae data, check Cl and speed
+plot Cl against speed (boxplot)
+calculate median of Cl by speed factor (tapply, na.omit())
+
+2) read "Analysis.txt", the algae data, plot scatterplot of NO3 and NH4 v.s.Cl in one plot, using different colors (plot, points)
+
 
 
 
