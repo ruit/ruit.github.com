@@ -35,6 +35,11 @@ plot(wt, mpg, main="Scatterplot Example",
 # Add fit lines
 abline(lm(mpg~wt), col="red") # regression line (y~x) 
 lines(lowess(wt,mpg), col="blue") # lowess line (x,y)
+#LOESS, or LOWESS (locally weighted scatterplot smoothing)
+#LOESS或者LOWESS是建立在传统方法基础之上的现代模拟方法中的一个。这种方法结合了线性回归的简单性和非线性
+#模型的灵活性，它仅仅拟合局部的数据子集，建立描述数据变化的决定性部分的函数，这种方法最大的好处在于数据分析者
+#不需要设定拟合全部数据的全域函数，仅仅拟合一部分数据。
+
 
 
 # Simple Bar Plot 
@@ -45,21 +50,32 @@ barplot(counts, main="Car Distribution",
 counts <- table(mtcars$vs, mtcars$gear)
 barplot(counts, main="Car Distribution by Gears and VS",
   xlab="Number of Gears", col=c("darkblue","red"),
- 	legend = rownames(counts))
+ 	legend = rownames(counts), beside=T)
+#V/S, V engine or straight engine
+
+
+
 
 # Boxplot of MPG by Car Cylinders 
 boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
   	xlab="Number of Cylinders", ylab="Miles Per Gallon")
+
 # Notched Boxplot of Tooth Growth Against 2 Crossed Factors
 # boxes colored for ease of interpretation 
-boxplot(len~supp*dose, data=ToothGrowth, notch=TRUE, 
+# The Effect of Vitamin C on Tooth Growth in Guinea Pigs
+# The response is the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C # (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid抗坏血酸维生素C).
+boxplot(len~supp*dose, data=ToothGrowth, notch=F, 
   col=(c("gold","darkgreen")),
   main="Tooth Growth", xlab="Suppliment and Dose")
+#n the notched boxplot, if two boxes' notches do not overlap this is ‘strong evidence’ their medians differ (Chambers et al., 1983, p. 62).
+
+
+
 
 
 #heatmap
 require(graphics); require(grDevices)
-x  <- as.matrix(mtcars)
+x  <- as.matrix(mtcars)####!!!!!!
 rc <- rainbow(nrow(x), start = 0, end = .3)
 cc <- rainbow(ncol(x), start = 0, end = .3)
 hv <- heatmap(x, col = cm.colors(256), scale = "column",
@@ -74,9 +90,19 @@ heatmap(x, Colv = NA, col = cm.colors(256), scale = "column",
         xlab = "specification variables", ylab =  "Car Models",
         main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
 
+## no row dendrogram (nor reordering) at all:
+heatmap(x, Rowv = NA, col = cm.colors(256), scale = "column",
+        RowSideColors = rc, margins = c(5,10),
+        xlab = "specification variables", ylab =  "Car Models",
+        main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+
 ## "no nothing"
 heatmap(x, Rowv = NA, Colv = NA, scale = "column",
         main = "heatmap(*, NA, NA) ~= image(t(x))")
+
+
+
+
 
 
 
@@ -92,7 +118,7 @@ AAAGCTTTTCTGTAAAGCTTATAAAAGCTAGGCCCGGACCCTTCTGTGGATAAGTGCCTTTAGCCCTTG
 
 
 #bwa lab, yeast genome?
-
+/Users/tianr/0projects/Constants/yeast
 
 
 #liftover, genome assembly conversion
