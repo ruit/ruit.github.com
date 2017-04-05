@@ -57,6 +57,8 @@ barplot(counts, main="Car Distribution by Gears and VS",
 
 
 # Boxplot of MPG by Car Cylinders 
+# 大于上四分位数1.5倍四分位数差的值，或者小于下四分位数1.5倍四分位数差的值，划为异常值（outliers）
+# Q3-Q1, the length of box, %75quantile -%25quantile
 boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
   	xlab="Number of Cylinders", ylab="Miles Per Gallon")
 
