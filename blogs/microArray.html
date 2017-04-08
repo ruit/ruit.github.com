@@ -1,0 +1,177 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+},
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0em 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage.left {
+  text-align: left;
+}
+.rimage.right {
+  text-align: right;
+}
+.rimage.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>How to Analyze Affymetric Microarray Data by Using R</title>
+</head>
+
+<body>
+<h2>How to Analyze Affymetrics Microarray Data by Using R</h2>
+<p>This is an example to show microarray data analysis by using R packages <b>affy</b> and <b>limma</b>.</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">setwd</span><span class="hl std">(</span><span class="hl str">&quot;/Users/tianr/Desktop/blood_microarray&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">library</span><span class="hl std">(affy)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Loading required package: BiocGenerics
+## Loading required package: parallel
+## 
+## Attaching package: 'BiocGenerics'
+## 
+## The following objects are masked from 'package:parallel':
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB
+## 
+## The following object is masked from 'package:stats':
+## 
+##     xtabs
+## 
+## The following objects are masked from 'package:base':
+## 
+##     anyDuplicated, append, as.data.frame, as.vector, cbind,
+##     colnames, duplicated, eval, evalq, Filter, Find, get,
+##     intersect, is.unsorted, lapply, Map, mapply, match, mget,
+##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+##     rbind, Reduce, rep.int, rownames, sapply, setdiff, sort,
+##     table, tapply, union, unique, unlist
+## 
+## Loading required package: Biobase
+## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     'browseVignettes()'. To cite Bioconductor, see
+##     'citation(&quot;Biobase&quot;)', and for packages 'citation(&quot;pkgname&quot;)'.
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">data</span><span class="hl kwb">&lt;-</span><span class="hl kwd">ReadAffy</span><span class="hl std">(</span><span class="hl kwc">filenames</span><span class="hl std">=</span><span class="hl kwd">dir</span><span class="hl std">(</span><span class="hl kwc">pattern</span><span class="hl std">=</span><span class="hl str">&quot;.CEL.gz&quot;</span><span class="hl std">))</span>
+<span class="hl std">data</span><span class="hl opt">@</span><span class="hl kwc">cdfName</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;HG-U133_Plus_2&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;hgu133plus2hsrefseqcdf&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Loading required package: AnnotationDbi
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">data</span><span class="hl opt">@</span><span class="hl kwc">cdfName</span><span class="hl kwb">&lt;-</span><span class="hl str">&quot;hgu133plus2hsrefseqcdf&quot;</span>
+<span class="hl std">eset</span><span class="hl kwb">&lt;-</span><span class="hl kwd">rma</span><span class="hl std">(data)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Background correcting
+## Normalizing
+## Calculating Expression
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(limma)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## 
+## Attaching package: 'limma'
+## 
+## The following object is masked from 'package:BiocGenerics':
+## 
+##     plotMA
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">design</span><span class="hl kwb">&lt;-</span><span class="hl kwd">model.matrix</span><span class="hl std">(</span><span class="hl opt">~</span><span class="hl num">0</span><span class="hl opt">+</span><span class="hl kwd">factor</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">)))</span>
+<span class="hl kwd">colnames</span><span class="hl std">(design)</span><span class="hl kwb">&lt;-</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;human_CD133&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;human_CD36&quot;</span><span class="hl std">)</span>
+<span class="hl std">exprs.mat</span><span class="hl kwb">&lt;-</span><span class="hl kwd">as.matrix</span><span class="hl std">(</span><span class="hl kwd">exprs</span><span class="hl std">(eset))</span>
+<span class="hl std">fit</span><span class="hl kwb">&lt;-</span><span class="hl kwd">lmFit</span><span class="hl std">(exprs.mat, design)</span>
+
+<span class="hl std">x</span><span class="hl kwb">&lt;-</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'human_CD133-human_CD36'</span><span class="hl std">)</span>
+<span class="hl std">contrast.matrix</span><span class="hl kwb">&lt;-</span><span class="hl kwd">makeContrasts</span><span class="hl std">(</span><span class="hl kwc">contrasts</span><span class="hl std">=x,</span><span class="hl kwc">levels</span><span class="hl std">=design)</span>
+<span class="hl std">fit2</span><span class="hl kwb">&lt;-</span><span class="hl kwd">contrasts.fit</span><span class="hl std">(fit, contrast.matrix)</span>
+
+<span class="hl std">fit2</span><span class="hl kwb">&lt;-</span><span class="hl kwd">eBayes</span><span class="hl std">(fit2)</span>
+<span class="hl std">diff.exprs</span><span class="hl kwb">&lt;-</span><span class="hl kwd">topTable</span><span class="hl std">(fit2,</span> <span class="hl kwc">n</span><span class="hl std">=</span><span class="hl num">3000</span><span class="hl std">,</span><span class="hl kwc">sort.by</span><span class="hl std">=</span><span class="hl str">&quot;p&quot;</span><span class="hl std">,</span> <span class="hl kwc">adjust.method</span><span class="hl std">=</span><span class="hl str">&quot;BH&quot;</span><span class="hl std">,</span> <span class="hl kwc">p.value</span><span class="hl std">=</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl kwc">lfc</span><span class="hl std">=</span><span class="hl num">0</span><span class="hl std">)</span>
+<span class="hl kwd">head</span><span class="hl std">(diff.exprs)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##                        logFC  AveExpr         t      P.Value    adj.P.Val
+## NM_000559.2_at    -10.026907 9.547714 -122.6144 6.568179e-12 6.344852e-08
+## NM_001145847.1_at   7.639561 8.034666  107.8895 1.473496e-11 6.344852e-08
+## NM_001145848.1_at   7.639561 8.034666  107.8895 1.473496e-11 6.344852e-08
+## NM_001145849.1_at   7.639561 8.034666  107.8895 1.473496e-11 6.344852e-08
+## NM_001145850.1_at   7.639561 8.034666  107.8895 1.473496e-11 6.344852e-08
+## NM_001145851.1_at   7.639561 8.034666  107.8895 1.473496e-11 6.344852e-08
+##                          B
+## NM_000559.2_at    17.08569
+## NM_001145847.1_at 16.64414
+## NM_001145848.1_at 16.64414
+## NM_001145849.1_at 16.64414
+## NM_001145850.1_at 16.64414
+## NM_001145851.1_at 16.64414
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">top500</span><span class="hl kwb">&lt;-</span><span class="hl kwd">topTable</span><span class="hl std">(fit2,</span> <span class="hl kwc">n</span><span class="hl std">=</span><span class="hl num">500</span><span class="hl std">,</span><span class="hl kwc">sort.by</span><span class="hl std">=</span><span class="hl str">&quot;p&quot;</span><span class="hl std">,</span> <span class="hl kwc">adjust.method</span><span class="hl std">=</span><span class="hl str">&quot;BH&quot;</span><span class="hl std">,</span> <span class="hl kwc">p.value</span><span class="hl std">=</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl kwc">lfc</span><span class="hl std">=</span><span class="hl num">0</span><span class="hl std">)</span>
+<span class="hl std">gene.list</span><span class="hl kwb">&lt;-</span><span class="hl kwd">row.names</span><span class="hl std">(</span><span class="hl kwd">as.matrix</span><span class="hl std">(top500))</span>
+
+<span class="hl com">#diff.significant&lt;-diff.exprs[diff.exprs$adj.P.Val&lt;=0.05,]</span>
+<span class="hl com">#dim(diff.significant)</span>
+<span class="hl kwd">write.table</span><span class="hl std">(diff.exprs,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl str">&quot;diff.exprs.txt&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;\t&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+
+<p>Take a look at those differentially expressed genes:</p>
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(pheatmap)</span>
+<span class="hl kwd">pheatmap</span><span class="hl std">(exprs.mat[gene.list, ],</span> <span class="hl kwc">show_rownames</span><span class="hl std">=F,</span> <span class="hl kwc">color</span> <span class="hl std">=</span> <span class="hl kwd">colorRampPalette</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;navy&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;white&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;firebrick3&quot;</span><span class="hl std">))(</span><span class="hl num">100</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div></div>
+
+</body>
+</html>
